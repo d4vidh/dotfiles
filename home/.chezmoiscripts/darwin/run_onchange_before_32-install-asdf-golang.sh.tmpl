@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# {{ template "common-lib.sh" . }}
+# {{ template "asdf-lib.sh" . }}
+
+log_info '[MacOS - 032] Install Go via Asdf.'
+
+# shellcheck disable=SC2154
+ensure_path_entry "${asdf_prefix}/bin"
+
+if ! is_asdf_plugin_installed 'golang'; then
+  log_warning '[MacOS - 032] Asdf Go plugin not installed.'
+  log_task '[MacOS - 032] Installing Asdf Go plugin...'
+
+  asdf plugin add golang https://github.com/asdf-community/asdf-golang
+fi
+
+readonly wanted_versions=(
+  "1.20.12"
+)
+
+for version in "${wanted_versions[@]}"; do
+  if ! is_asdf_package_installed 'golang' "${version}"; then
+    log_warning "[MacOS - 032] Go ${version} not installed."
+    log_task "[MacOS - 032] Installing Go ${version}..."
+    asdf install 'golang' "${version}"
+  fi
+done
+
+last_index=$((${#wanted_versions[@]} - 1))
+last_version=${wanted_versions[${last_index}]}
+
+asdf global 'golang' "${last_version}"
+
+log_success '[MacOS - 032] Go installed!'

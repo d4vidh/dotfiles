@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# {{ template "common-lib.sh" . }}
+
+log_info '[MacOS - 030] Install Asdf.'
+
+if [ -z "$(command -v asdf || true)" ]; then
+  log_task '[MacOS - 030] Installing Asdf...'
+  git clone https://github.com/asdf-vm/asdf.git "${HOME}/.asdf" --branch v0.13.1
+  # shellcheck disable=SC1091
+  . "${HOME}/.asdf/asdf.sh"
+else
+  log_info '[MacOS - 030] Asdf already existed. Updating it...'
+  asdf update
+fi
+
+log_success '[MacOS - 030] Asdf installed or updated!'

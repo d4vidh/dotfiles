@@ -1,6 +1,7 @@
 {
   "files.associations": {
     "*_zprofile.tmpl": "shellscript",
+    "*_zshrc.tmpl": "shellscript",
     "**/.chezmoitemplates/*.sh": "shellscript",
     "**/.chezmoiscripts/**/run_*": "shellscript",
   },

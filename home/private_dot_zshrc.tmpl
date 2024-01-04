@@ -1,8 +1,10 @@
+# shellcheck disable=SC1090,SC1091,SC2034,SC2296
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+if [[ -r "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-$(whoami).zsh" ]]; then
+  source "${XDG_CACHE_HOME:-${HOME}/.cache}/p10k-instant-prompt-$(whoami).zsh"
 fi
 
 ##############################################################################
@@ -81,6 +83,20 @@ export PATH="/opt/homebrew/opt/llvm/bin:${PATH}"
 
 export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
+
+##############################################################################
+# ASDF configurations
+##############################################################################
+
+# Enable asdf
+if [[ -d "${HOME}/.asdf" ]]; then
+  . "${HOME}/.asdf/asdf.sh"
+fi
+
+# Set GOROOT
+if [[ -d "${HOME}/.asdf/plugins/golang" ]]; then
+  . "${HOME}/.asdf/plugins/golang/set-env.zsh"
+fi
 
 ##############################################################################
 # Prompt configurations
