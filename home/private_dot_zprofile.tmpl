@@ -1,0 +1,9 @@
+# shellcheck shell=sh
+
+# Set Homebrew variables
+if [ -f "/opt/homebrew/bin/brew" ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# Enable pipx
+export PATH="$PATH:/Users/david/.local/bin"

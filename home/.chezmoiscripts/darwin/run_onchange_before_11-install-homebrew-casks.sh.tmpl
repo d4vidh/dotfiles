@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# {{ template "common-lib.sh" . }}
+# {{ template "homebrew-lib.sh" . }}
+
+log_info '[MacOS - 011] Install applications via Homebrew casks.'
+
+# shellcheck disable=SC2154
+ensure_path_entry "${homebrew_prefix}/bin"
+
+readonly wanted_apps=(
+  1password
+  1password-cli
+  cursor
+  fork
+  hammerspoon
+  iterm2
+  notion
+  raycast
+  readdle-spark
+  visual-studio-code
+  warp
+  # {{ if not .is_virtualized }}
+  docker
+  microsoft-edge
+  microsoft-excel
+  microsoft-powerpoint
+  microsoft-teams
+  microsoft-word
+  onedrive
+  utm
+  # {{ end }}
+)
+
+missing_apps=()
+
+for app in "${wanted_apps[@]}"; do
+  if ! is_brew_cask_package_installed "${app}"; then
+    missing_apps+=("${app}")
+  fi
+done
+
+if [[ ${#missing_apps[@]} -gt 0 ]]; then
+  log_task "[MacOS - 011] Installing missing applications..."
+  brew install --cask --force "${missing_apps[@]}"
+fi
+
+log_success '[MacOS - 011] Applications installed!'

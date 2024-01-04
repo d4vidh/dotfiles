@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# {{ template "common-lib.sh" . }}
+# {{ template "homebrew-lib.sh" . }}
+
+log_info '[MacOS - 010] Install Homebrew packages.'
+
+# shellcheck disable=SC2154
+ensure_path_entry "${homebrew_prefix}/bin"
+
+readonly wanted_packages=(
+  bat
+  coreutils
+  curl
+  chezmoi
+  commitizen
+  gh
+  git
+  gnupg
+  golangci-lint
+  hadolint
+  jq
+  llvm
+  neovim
+  pinentry-mac
+  pipx
+  ripgrep
+  pre-commit
+  shellcheck
+  shfmt
+  wget
+  zlib
+)
+
+missing_packages=()
+
+for package in "${wanted_packages[@]}"; do
+  if ! is_brew_package_installed "${package}"; then
+    missing_packages+=("${package}")
+  fi
+done
+
+if [[ ${#missing_packages[@]} -gt 0 ]]; then
+  log_task "[MacOS - 010] Installing missing packages..."
+  brew install --force "${missing_packages[@]}"
+fi
+
+log_success '[MacOS - 010] Homebrew packages installed!'

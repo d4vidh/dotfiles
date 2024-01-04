@@ -1,5 +1,15 @@
 # shellcheck shell=bash
 
+function ensure_path_entry() {
+  local _entries=("$@")
+
+  for _entry in "${_entries[@]}"; do
+    if [[ ":${PATH}:" != *":${_entry}:"* ]]; then
+      export PATH="${_entry}:${PATH}"
+    fi
+  done
+}
+
 function log_color() {
   local _code="$1"
   shift

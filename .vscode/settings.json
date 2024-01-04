@@ -1,7 +1,8 @@
 {
   "files.associations": {
-    "**/home/.chezmoitemplates/*.sh": "shellscript",
-    "**/home/**/run_*": "shellscript",
+    "*_zprofile.tmpl": "shellscript",
+    "**/.chezmoitemplates/*.sh": "shellscript",
+    "**/.chezmoiscripts/**/run_*": "shellscript",
   },
   "[shellscript]": {
     "editor.defaultFormatter": "foxundermoon.shell-format",
