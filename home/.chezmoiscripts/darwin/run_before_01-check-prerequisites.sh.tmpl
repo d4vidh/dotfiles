@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# {{ template "common-lib.sh" . }}
+
+log_green '👋 [MacOS - 001] Check prerequisites.'
+
+function is_1password_signed_in() {
+  op whoami >/dev/null 2>&1
+}
+
+if [ -z "$(command -v brew || true)" ]; then
+  log_error '[MacOS - 001] Homebrew not installed!'
+  exit 1
+fi
+
+if [ -z "$(command -v op || true)" ]; then
+  log_error '[MacOS - 001] 1Password not installed!'
+  exit 1
+fi
+
+if ! is_1password_signed_in; then
+  log_error '[MacOS - 001] 1Password not signed in!'
+  exit 1
+fi
+
+log_success '[MacOS - 001] All prerequisites checked!'

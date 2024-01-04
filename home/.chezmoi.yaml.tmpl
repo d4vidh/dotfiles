@@ -1,0 +1,19 @@
+{{- $name := "Daeyoung Hong" -}}
+{{- $email := "daeyoungh923@gmail.com" -}}
+
+{{- $is_virtualized := false -}}{{/* true if this machine is an UTM VM instance */}}
+
+{{- $hostname := .chezmoi.hostname -}}
+
+{{/* detect VMs */}}
+{{- if eq .chezmoi.username "macos" -}}
+{{-   $is_virtualized = true -}}
+{{- end -}}
+
+data:
+  is_virtualized: {{ $is_virtualized }}
+  git:
+    name: {{ $name | quote }}
+    email: {{ $email | quote }}
+  onepassword:
+    username: {{ $email | quote }}
