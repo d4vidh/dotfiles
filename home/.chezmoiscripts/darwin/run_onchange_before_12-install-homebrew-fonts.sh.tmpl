@@ -24,7 +24,7 @@ done
 brew tap homebrew/cask-fonts
 
 if [[ ${#missing_fonts[@]} -gt 0 ]]; then
-  log_task "[MacOS - 012] Installing missing fonts..."
+  log_task '[MacOS - 012] Installing missing fonts...'
   brew install --cask --force "${missing_fonts[@]}"
 fi
 

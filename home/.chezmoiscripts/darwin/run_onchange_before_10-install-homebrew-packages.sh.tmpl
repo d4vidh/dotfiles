@@ -41,7 +41,7 @@ for package in "${wanted_packages[@]}"; do
 done
 
 if [[ ${#missing_packages[@]} -gt 0 ]]; then
-  log_task "[MacOS - 010] Installing missing packages..."
+  log_task '[MacOS - 010] Installing missing packages...'
   brew install --force "${missing_packages[@]}"
 fi
 

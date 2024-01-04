@@ -41,7 +41,7 @@ for app in "${wanted_apps[@]}"; do
 done
 
 if [[ ${#missing_apps[@]} -gt 0 ]]; then
-  log_task "[MacOS - 011] Installing missing applications..."
+  log_task '[MacOS - 011] Installing missing applications...'
   brew install --cask --force "${missing_apps[@]}"
 fi
 
