@@ -5,8 +5,7 @@
 
 log_info '[MacOS - 031] Install Python via Asdf.'
 
-# shellcheck disable=SC2154
-ensure_path_entry "${asdf_prefix}/bin"
+ensure_path_entry "{{- .asdf.prefix -}}/bin"
 
 if ! is_asdf_plugin_installed 'python'; then
   log_warning '[MacOS - 031] Asdf Python plugin not installed.'

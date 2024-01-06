@@ -12,6 +12,3 @@ function is_asdf_package_installed() {
 
   asdf list "${_plugin}" "${_version}" &>/dev/null
 }
-
-# shellcheck disable=SC2034
-readonly asdf_prefix="${HOME}/.asdf"

@@ -5,8 +5,7 @@
 
 log_info '[MacOS - 010] Install Homebrew packages.'
 
-# shellcheck disable=SC2154
-ensure_path_entry "${homebrew_prefix}/bin"
+ensure_path_entry "{{- .homebrew.prefix -}}/bin"
 
 readonly wanted_packages=(
   bat

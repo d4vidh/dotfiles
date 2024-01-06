@@ -1,19 +1,26 @@
 {{- $name := "Daeyoung Hong" -}}
 {{- $email := "daeyoungh923@gmail.com" -}}
 
-{{- $is_virtualized := false -}}{{/* true if this machine is an UTM VM instance */}}
-
-{{- $hostname := .chezmoi.hostname -}}
-
-{{/* detect VMs */}}
+{{- $is_virtualized := false -}}
 {{- if eq .chezmoi.username "macos" -}}
 {{-   $is_virtualized = true -}}
 {{- end -}}
 
+{{- $asdf_prefix := (joinPath .chezmoi.homeDir ".asdf") -}}
+
+{{- $homebrew_prefix := "/opt/homebrew" -}}
+{{- if ne .chezmoi.arch "arm64" -}}
+{{-   $homebrew_prefix := "/usr/local" -}}
+{{- end -}}
+
 data:
   is_virtualized: {{ $is_virtualized }}
+  asdf:
+    prefix: {{ $asdf_prefix }}
   git:
     name: {{ $name | quote }}
     email: {{ $email | quote }}
+  homebrew:
+    prefix: {{ $homebrew_prefix }}
   onepassword:
     username: {{ $email | quote }}

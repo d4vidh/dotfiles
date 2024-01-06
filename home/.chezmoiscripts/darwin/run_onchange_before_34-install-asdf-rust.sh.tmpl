@@ -5,8 +5,7 @@
 
 log_info '[MacOS - 034] Install Rust via Asdf.'
 
-# shellcheck disable=SC2154
-ensure_path_entry "${asdf_prefix}/bin"
+ensure_path_entry "{{- .asdf.prefix -}}/bin"
 
 if ! is_asdf_plugin_installed 'rust'; then
   log_warning '[MacOS - 034] Asdf Rust plugin not installed.'
