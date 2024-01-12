@@ -1,0 +1,7 @@
+# shellcheck shell=sh
+
+# Enable cargo
+if [ -d "${HOME}/.cargo" ]; then
+  # shellcheck disable=SC1091
+  . "$HOME/.cargo/env"
+fi
