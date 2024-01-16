@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# {{ template "common-lib.sh" . }}
+
+function is_pipx_package_installed() {
+  local package="$1"
+
+  pipx list | grep --quiet "${package}"
+}
+
+log_info 'Install pipx packages.'
+
+if [ -z "$(command -v pipx || true)" ]; then
+  log_task 'Pipx not existed. Installing it...'
+  sudo apt-get install -y pipx
+fi
+
+readonly wanted_packages=(
+  commitizen
+  pre-commit
+)
+
+missing_packages=()
+
+for package in "${wanted_packages[@]}"; do
+  if ! is_pipx_package_installed "${package}"; then
+    missing_packages+=("${package}")
+  fi
+done
+
+if [[ ${#missing_packages[@]} -gt 0 ]]; then
+  log_task 'Installing missing pipx packages...'
+  pipx install "${missing_packages[@]}"
+fi
+
+log_success 'Pipx packages installed!'

@@ -1,9 +1,11 @@
 # shellcheck shell=sh
 
+# {{- if eq .chezmoi.os "darwin" -}}
 # Set Homebrew variables
 if [ -f "/opt/homebrew/bin/brew" ]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
+# {{- end -}}
 
 # Enable pipx
-export PATH="$PATH:/Users/david/.local/bin"
+export PATH="$PATH:{{- .chezmoi.homeDir -}}/.local/bin"

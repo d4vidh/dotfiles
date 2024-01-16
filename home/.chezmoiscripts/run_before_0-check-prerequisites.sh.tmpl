@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# {{ template "common-lib.sh" . }}
+
+log_green '👋 Check prerequisites.'
+
+if [ -z "$(command -v op || true)" ]; then
+  log_error '1Password not installed!'
+  exit 1
+fi
+
+log_success 'All prerequisites checked!'

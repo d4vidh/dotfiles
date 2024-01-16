@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# {{ template "common-lib.sh" . }}
+
+function is_apt_package_installed() {
+  local package="$1"
+
+  apt list --quiet --quiet --installed "${package}" 2>/dev/null | grep --quiet .
+}
+
+log_info 'Install APT packages.'
+
+sudo apt-get update
+sudo apt-get upgrade -y
+
+readonly wanted_packages=(
+  bat
+  pipx
+  zsh
+)
+
+missing_packages=()
+
+for package in "${wanted_packages[@]}"; do
+  if ! is_apt_package_installed "${package}"; then
+    missing_packages+=("${package}")
+  fi
+done
+
+if [[ ${#missing_packages[@]} -gt 0 ]]; then
+  log_task 'Installing missing APT packages...'
+  sudo apt-get install -y "${missing_packages[@]}"
+fi
+
+log_success 'APT packages installed!'

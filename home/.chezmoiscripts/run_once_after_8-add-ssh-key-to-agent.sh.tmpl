@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# {{ template "common-lib.sh" . }}
+
+log_green '👍 Add SSH private key to ssh-agnet!'
+
+eval "$(ssh-agent -s)"
+
+ssh-add "${HOME}/.ssh/id_ed25519"
+
+log_success 'SSH key added!'

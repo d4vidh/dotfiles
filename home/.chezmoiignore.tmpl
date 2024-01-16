@@ -1,9 +1,13 @@
 {{ if ne .chezmoi.os "darwin" }}
 .chezmoiscripts/darwin/**
+.chezmoitemplates/homebrew-lib.sh
+.gnupg
 {{ end }}
 
 {{ if ne .chezmoi.os "linux" }}
 .chezmoiscripts/linux/**
+.chezmoitemplates/apt-lib.sh
+.chezmoitemplates/pipx-lib.sh
 {{ end }}
 
 {{ if ne .chezmoi.os "windows" }}
