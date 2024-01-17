@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# To run this script, pipx must be installed.
+
 # {{ template "common-lib.sh" . }}
 
 function is_pipx_package_installed() {
@@ -11,8 +13,8 @@ function is_pipx_package_installed() {
 log_info 'Install pipx packages.'
 
 if [ -z "$(command -v pipx || true)" ]; then
-  log_task 'Pipx not existed. Installing it...'
-  sudo apt-get install -y pipx
+  log_error 'Pipx not installed!'
+  exit 1
 fi
 
 readonly wanted_packages=(
@@ -20,17 +22,10 @@ readonly wanted_packages=(
   pre-commit
 )
 
-missing_packages=()
-
 for package in "${wanted_packages[@]}"; do
   if ! is_pipx_package_installed "${package}"; then
-    missing_packages+=("${package}")
+    pipx install "${package}"
   fi
 done
-
-if [[ ${#missing_packages[@]} -gt 0 ]]; then
-  log_task 'Installing missing pipx packages...'
-  pipx install "${missing_packages[@]}"
-fi
 
 log_success 'Pipx packages installed!'

@@ -5,7 +5,7 @@
 {{ end }}
 
 {{ if ne .chezmoi.os "linux" }}
-.chezmoiscripts/linux/**
+.chezmoiscripts/*-linux-*.sh.tmpl
 .chezmoitemplates/apt-lib.sh
 .chezmoitemplates/pipx-lib.sh
 {{ end }}
