@@ -1,14 +1,16 @@
 #!/bin/bash
 
-# {{ template "common-lib.sh" . }}
+# {{ template "logger.sh" . }}
 
 log_info 'Install Rustup.'
 
 if [ -z "$(command -v rustup || true)" ]; then
   log_task 'Installing Rustup...'
+
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 else
   log_info 'Rustup already existed. Updating it...'
+
   rustup update &>/dev/null
 fi
 

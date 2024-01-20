@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# {{ template "common-lib.sh" . }}
+# {{ template "logger.sh" . }}
 
 function is_apt_package_installed() {
   local package="$1"
@@ -29,6 +29,7 @@ done
 
 if [[ ${#missing_packages[@]} -gt 0 ]]; then
   log_task 'Installing missing APT packages...'
+
   sudo apt-get install -y "${missing_packages[@]}"
 fi
 

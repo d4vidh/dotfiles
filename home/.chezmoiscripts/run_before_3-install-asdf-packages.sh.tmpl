@@ -1,0 +1,112 @@
+#!/bin/bash
+
+# {{ template "logger.sh" . }}
+
+function is_asdf_plugin_installed() {
+  local _plugin="$1"
+
+  asdf list "${_plugin}" &>/dev/null
+}
+
+function is_asdf_package_installed() {
+  local _plugin="$1"
+  local _version="$2"
+
+  asdf list "${_plugin}" "${_version}" &>/dev/null
+}
+
+log_info 'Install languages via asdf.'
+
+if [ -z "$(command -v asdf || true)" ]; then
+  log_error 'Asdf not installed!'
+  exit 1
+fi
+
+##############################################################################
+# Python
+##############################################################################
+
+if ! is_asdf_plugin_installed 'python'; then
+  log_warning 'Asdf python plugin not installed.'
+  log_task 'Installing asdf python plugin...'
+
+  asdf plugin add python https://github.com/asdf-community/asdf-python
+fi
+
+wanted_versions=(
+  "3.12.1"
+)
+
+for version in "${wanted_versions[@]}"; do
+  if ! is_asdf_package_installed 'python' "${version}"; then
+    log_warning "Python ${version} not installed."
+    log_task "Installing python ${version}..."
+
+    asdf install 'python' "${version}"
+  fi
+done
+
+last_index=$((${#wanted_versions[@]} - 1))
+last_version=${wanted_versions[${last_index}]}
+
+asdf global 'python' "${last_version}"
+
+##############################################################################
+# Go
+##############################################################################
+
+if ! is_asdf_plugin_installed 'golang'; then
+  log_warning 'Asdf go plugin not installed.'
+  log_task 'Installing asdf go plugin...'
+
+  asdf plugin add golang https://github.com/asdf-community/asdf-golang
+fi
+
+wanted_versions=(
+  "1.20.12"
+)
+
+for version in "${wanted_versions[@]}"; do
+  if ! is_asdf_package_installed 'golang' "${version}"; then
+    log_warning "Go ${version} not installed."
+    log_task "Installing oo ${version}..."
+
+    asdf install 'golang' "${version}"
+  fi
+done
+
+last_index=$((${#wanted_versions[@]} - 1))
+last_version=${wanted_versions[${last_index}]}
+
+asdf global 'golang' "${last_version}"
+
+##############################################################################
+# Nodejs
+##############################################################################
+
+if ! is_asdf_plugin_installed 'nodejs'; then
+  log_warning 'Asdf nodejs plugin not installed.'
+  log_task 'Installing asdf nodejs plugin...'
+
+  asdf plugin add nodejs https://github.com/asdf-vm/asdf-nodejs
+fi
+
+wanted_versions=(
+  "20.10.0"
+)
+
+for version in "${wanted_versions[@]}"; do
+  if ! is_asdf_package_installed 'nodejs' "${version}"; then
+    log_warning "Nodejs ${version} not installed."
+    log_task "Installing nodejs ${version}..."
+
+    asdf install 'nodejs' "${version}"
+  fi
+done
+
+last_index=$((${#wanted_versions[@]} - 1))
+last_version=${wanted_versions[${last_index}]}
+
+asdf global 'nodejs' "${last_version}"
+
+log_success 'Languages installed!'

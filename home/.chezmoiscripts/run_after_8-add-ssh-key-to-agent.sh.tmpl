@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# {{ template "logger.sh" . }}
+
+log_info 'Add SSH key.'
+
+if ssh-add -l | grep -q "{{- .email -}}"; then
+  log_info 'SSH key already added!'
+  exit 0
+fi
+
+eval "$(ssh-agent -s)"
+ssh-add "${HOME}/.ssh/id_ed25519"
+
+log_success 'SSH key added!'

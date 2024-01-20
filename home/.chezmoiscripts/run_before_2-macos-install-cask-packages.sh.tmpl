@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# {{ template "logger.sh" . }}
+
+function is_cask_package_installed() {
+  local _package="$1"
+
+  brew list --cask "${_package}" &>/dev/null
+}
+
+log_info 'Install apps and fonts via Homebrew casks.'
+
+if [ -z "$(command -v brew || true)" ]; then
+  log_error 'Homebrew not installed!'
+  exit 1
+fi
+
+readonly wanted_packages=(
+  1password
+  1password-cli
+  cursor
+  docker
+  font-fira-code-nerd-font
+  font-meslo-lg-nerd-font
+  fork
+  hammerspoon
+  iterm2
+  notion
+  microsoft-edge
+  microsoft-excel
+  microsoft-powerpoint
+  microsoft-teams
+  microsoft-word
+  onedrive
+  raycast
+  readdle-spark
+  utm
+  visual-studio-code
+  warp
+)
+
+missing_packages=()
+
+for app in "${wanted_packages[@]}"; do
+  if ! is_cask_package_installed "${app}"; then
+    missing_packages+=("${app}")
+  fi
+done
+
+if [[ ${#missing_packages[@]} -gt 0 ]]; then
+  log_task 'Installing missing packages...'
+
+  brew tap homebrew/cask-fonts
+  brew install --cask --force "${missing_packages[@]}"
+fi
+
+log_success 'Apps and fonts installed!'

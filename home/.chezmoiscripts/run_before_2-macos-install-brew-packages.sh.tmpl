@@ -1,18 +1,25 @@
 #!/bin/bash
 
-# {{ template "common-lib.sh" . }}
-# {{ template "homebrew-lib.sh" . }}
+# {{ template "logger.sh" . }}
 
-log_info '[MacOS - 010] Install Homebrew packages.'
+function is_brew_package_installed() {
+  local _package="$1"
 
-ensure_path_entry "{{- .homebrew.prefix -}}/bin"
+  brew list --formula "${_package}" &>/dev/null
+}
+
+log_info 'Install Homebrew packages.'
+
+if [ -z "$(command -v brew || true)" ]; then
+  log_error 'Homebrew not installed!'
+  exit 1
+fi
 
 readonly wanted_packages=(
   bat
   coreutils
   curl
   chezmoi
-  commitizen
   gh
   git
   gnupg
@@ -23,7 +30,6 @@ readonly wanted_packages=(
   pinentry-mac
   pipx
   ripgrep
-  pre-commit
   shellcheck
   shfmt
   wget
@@ -39,8 +45,9 @@ for package in "${wanted_packages[@]}"; do
 done
 
 if [[ ${#missing_packages[@]} -gt 0 ]]; then
-  log_task '[MacOS - 010] Installing missing packages...'
+  log_task 'Installing missing packages...'
+
   brew install --force "${missing_packages[@]}"
 fi
 
-log_success '[MacOS - 010] Homebrew packages installed!'
+log_success 'Homebrew packages installed!'

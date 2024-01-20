@@ -1,8 +1,15 @@
 #!/bin/bash
 
-# {{ template "common-lib.sh" . }}
+# {{ template "logger.sh" . }}
 
 log_green '👋 Check prerequisites.'
+
+# {{ if eq .chezmoi.os "darwin" }}
+if [ -z "$(command -v brew || true)" ]; then
+  log_error 'Homebrew not installed!'
+  exit 1
+fi
+# {{ end }}
 
 if [ -z "$(command -v op || true)" ]; then
   log_error '1Password not installed!'

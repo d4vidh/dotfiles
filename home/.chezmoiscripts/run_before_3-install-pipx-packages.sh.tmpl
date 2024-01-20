@@ -2,7 +2,7 @@
 
 # To run this script, pipx must be installed.
 
-# {{ template "common-lib.sh" . }}
+# {{ template "logger.sh" . }}
 
 function is_pipx_package_installed() {
   local package="$1"
@@ -24,6 +24,9 @@ readonly wanted_packages=(
 
 for package in "${wanted_packages[@]}"; do
   if ! is_pipx_package_installed "${package}"; then
+    log_warning "Pipx package ${package} not installed."
+    log_task "Installing pipx package ${package}..."
+
     pipx install "${package}"
   fi
 done

@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# {{ template "logger.sh" . }}
+
+log_info 'Install Asdf.'
+
+asdf_prefix="${HOME}/.asdf"
+
+if [ -z "$(command -v asdf || true)" ]; then
+  log_task 'Installing Asdf...'
+
+  git clone https://github.com/asdf-vm/asdf.git "${asdf_prefix}" --branch v0.13.1
+  # shellcheck disable=SC1091
+  . "${asdf_prefix}/asdf.sh"
+else
+  log_info 'Asdf already existed. Updating it...'
+
+  asdf update &>/dev/null
+fi
+
+log_success 'Asdf installed!'
