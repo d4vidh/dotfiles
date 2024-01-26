@@ -1,6 +1,11 @@
-{{ if eq .chezmoi.os "darwin" }}
+{{- if eq .chezmoi.os "darwin" -}}
 Host github.com
   AddKeysToAgent yes
   UseKeychain yes
   IdentityFile ~/.ssh/id_ed25519
-{{ end }}
+
+Host ubuntu-vm
+  HostName 192.168.64.16
+  User david
+  IdentityFile ~/.ssh/id_ed25519
+{{- end -}}
