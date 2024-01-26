@@ -17,10 +17,15 @@ function is_asdf_package_installed() {
 
 log_info 'Install languages via asdf.'
 
-if [ -z "$(command -v asdf || true)" ]; then
+asdf_prefix="${HOME}/.asdf"
+
+if [ ! -d "${asdf_prefix}" ]; then
   log_error 'Asdf not installed!'
   exit 1
 fi
+
+# shellcheck disable=SC1091
+. "${asdf_prefix}/asdf.sh"
 
 ##############################################################################
 # Python
