@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -eufo pipefail
+
+{{ if not (lookPath "vagrant") }}
+brew install --cask vagrant
+{{ end }}
+
+
+{{ $plugins := list
+  "vagrant-qemu" -}}
+
+{{ range $plugins }}
+vagrant plugin install {{ . }}
+{{ end }}
