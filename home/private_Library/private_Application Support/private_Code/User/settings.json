@@ -1,0 +1,9 @@
+{
+  "cSpell.userWords": [
+      "autofetch",
+      "fira"
+  ],
+  "git.autofetch": true,
+  "terminal.integrated.fontFamily": "\"FiraCode Nerd Font\", monospace",
+  "terminal.integrated.fontSize": 14
+}
