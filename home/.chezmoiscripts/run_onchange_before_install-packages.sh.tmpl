@@ -3,11 +3,13 @@
 set -eufo pipefail
 
 {{ $brews := list
+  "bash"
   "chezmoi"
   "dockutil"
   "gh"
   "go"
   "node"
+  "openjdk"
   "pre-commit"
   "pipx"
   "python"
@@ -21,16 +23,19 @@ set -eufo pipefail
   "chatgpt"
   "font-fira-code-nerd-font"
   "fork"
+  "intellij-idea-ce"
   "iterm2"
   "microsoft-edge"
   "notion"
   "notion-calendar"
   "raycast"
+  "slack"
   "telegram"
   "utm"
   "vagrant"
   "visual-studio-code"
-  "warp" -}}
+  "warp"
+  "zed" -}}
 
 brew bundle --no-lock --file=/dev/stdin <<EOF
 {{ range ($brews | sortAlpha | uniq) -}}
