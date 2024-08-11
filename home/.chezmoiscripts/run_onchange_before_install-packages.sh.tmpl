@@ -43,7 +43,8 @@ set -eufo pipefail
   "visual-studio-code"
   "vlc"
   "warp"
-  "zed" -}}
+  "zed"
+  "zoom" -}}
 
 brew bundle --no-lock --file=/dev/stdin <<EOF
 {{ range ($brews | sortAlpha | uniq) -}}
