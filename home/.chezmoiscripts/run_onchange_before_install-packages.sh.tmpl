@@ -1,0 +1,46 @@
+#!/bin/bash
+
+set -eufo pipefail
+
+{{ $brews := list
+  "bash"
+  "chezmoi"
+  "commitizen"
+  "dockutil"
+  "gh"
+  "glab"
+  "go"
+  "pre-commit"
+  "starship" -}}
+{{ $casks := list
+  "1password"
+  "1password-cli"
+  "battery"
+  "chatgpt"
+  "docker"
+  "font-fira-code-nerd-font"
+  "fork"
+  "iterm2"
+  "microsoft-edge"
+  "microsoft-excel"
+  "microsoft-powerpoint"
+  "microsoft-teams"
+  "microsoft-word"
+  "notion"
+  "notion-calendar"
+  "onedrive"
+  "raycast"
+  "slack"
+  "utm"
+  "visual-studio-code"
+  "warp"
+  "zed" -}}
+
+brew bundle --file=/dev/stdin <<EOF
+{{ range ($brews | sortAlpha | uniq) -}}
+brew "{{ . }}"
+{{ end -}}
+{{ range ($casks | sortAlpha | uniq) -}}
+cask "{{ . }}"
+{{ end -}}
+EOF
